@@ -1,0 +1,298 @@
+import React, { useEffect, useState } from "react";
+import { Box } from '@material-ui/core';
+import styled from "styled-components";
+import Img_Logo1 from "../../images/logo-hd.png"
+import buysell from "../../images/buysell.png"
+import currency_data from "../../data/coin.json";
+
+var axios = require('axios');
+axios.defaults.baseURL = 'http://localhost:3001/';
+
+const Content = () => {
+    const [p_currencies, set_pCurrencies] = useState([]);
+    const [p_cad, set_pCad] = useState(0);
+
+    useEffect(() => {
+        axios.get("get_cyrpto_currency").then((res)=>{
+            set_pCurrencies(res.data.prices);
+            set_pCad(res.data.p_cad);
+        }).catch((error)=>{
+
+        })
+    })
+
+    return (
+        <StyledComponent>
+            <LogoPart>
+                <img src={Img_Logo1} alt="" />
+            </LogoPart>
+            <TablePart>
+                <LeftPart>
+                    <TableBox01>
+                        <TopTitle01>
+                            <LeftText01>WE BUY</LeftText01>
+                            <RightText01>BUY RATE</RightText01>
+                        </TopTitle01>
+                        <TableContent>
+                            {
+                                currency_data.map((data, index) => {
+                                    return (
+                                        <RowText key={index}>
+                                            <LeftText02>
+                                                <Box display="flex" alignItems="center">
+                                                    <img src={data.image_url} width="25px" alt="" />
+                                                </Box>
+                                                <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
+                                            </LeftText02>
+                                            <RightText02>{Number((parseFloat(p_currencies[index])*(1/p_cad)*0.998).toFixed(4)) } CAD</RightText02>
+                                        </RowText>
+                                    );
+                                })
+                            }
+                        </TableContent>
+                    </TableBox01>
+                </LeftPart>
+
+                <RightPart>
+                    <TableBox02>
+                        <TopTitle02>
+                            <LeftText01>WE SELL</LeftText01>
+                            <RightText01>SELL RATE</RightText01>
+                        </TopTitle02>
+                        <TableContent>
+                            {
+                                currency_data.map((data, index) => {
+                                    return (
+                                        <RowText key={index}>
+                                            <LeftText02>
+                                                <Box display="flex" alignItems="center">
+                                                    <img src={data.image_url} width="25px" alt="" />
+                                                </Box>
+                                                <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
+                                            </LeftText02>
+                                            <RightText02>{Number((parseFloat(p_currencies[index])*(1/p_cad)*1.025).toFixed(4)) } CAD</RightText02>
+                                        </RowText>
+                                    );
+                                })
+                            }
+                        </TableContent>
+                    </TableBox02>
+                </RightPart>
+            </TablePart>
+            <BuysellPart>
+                <img src={buysell} width="150px" alt="" />
+            </BuysellPart>
+        </StyledComponent>
+    );
+}
+
+const StyledComponent = styled(Box)`
+    display: flex;
+    position: relative;
+    width: 100%;
+    /* height: 100%; */
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;
+
+`
+const LogoPart = styled(Box)`
+    display: flex;
+    width: 100%;
+    margin-top: 100px;
+    justify-content: center;
+    >img{
+        width: 500px;
+        @media (max-width: 900px) {
+            width: 400px;
+        }
+        @media (max-width: 700px) {
+            width: 300px;
+        }
+        @media (max-width: 500px) {
+            width: 200px;
+        }
+        /* width : calc(100vw / 6000 * 2588);
+        height : calc(100vw / 6000 * 420); */
+    }
+`
+
+const TablePart = styled(Box)`
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 100px;
+    @media (max-width: 900px) {
+        flex-direction: column;
+    }
+`
+
+const LeftPart = styled(Box)`
+    display: flex;
+    flex: 1;
+    justify-content: center;
+`
+
+const RightPart = styled(Box)`
+    display: flex;
+    flex: 1;
+    justify-content: center;
+`
+const TableBox01 = styled(Box)`
+    display: flex;
+    width: 65%;
+    flex-direction: column;
+    height: 500px;
+    border-radius: 8px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgb(35 55 80) 0px 6px 10px;
+    @media (max-width: 1200px) {
+        width: 70%;
+    }
+    @media (max-width: 1000px) {
+        width: 85%;
+    }
+    margin-bottom: 100px;
+    &:hover{
+        transition: .5s;
+        box-shadow: rgb(14 114 53) 0px 10px 25px;
+    }
+`
+const TableBox02 = styled(Box)`
+    display: flex;
+    width: 65%;
+    flex-direction: column;
+    height: 500px;
+    border-radius: 8px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgb(35 55 80) 0px 6px 10px;
+    @media (max-width: 1200px) {
+        width: 70%;
+    }
+    @media (max-width: 1000px) {
+        width: 85%;
+    }
+    margin-bottom: 100px;
+    &:hover{
+        transition: .5s;
+        box-shadow: rgb(122 7 7) 0px 10px 25px;
+    }
+`
+
+const BuysellPart = styled(Box)`
+    display: flex;
+    position: absolute;
+    top: 50%;
+    >img{
+        @media (max-width: 1200px) {
+            width: 120px;
+        }
+    }
+    @media (max-width: 1000px) {
+        display: none;
+    }
+`
+const TopTitle01 = styled(Box)`
+    display: flex;
+    width: 100%;
+    height: 80px;
+    align-items: center;
+    background-color: rgb(37 183 93);
+    border-radius: 8px 8px 0px 0px;
+    color: white;
+    font-size: 2rem;
+    font-weight: 600;
+    font-family: 'Changa One',sans-serif;
+    @media (max-width: 1200px) {
+        font-size: 1.7rem;
+    }
+    @media (max-width: 500px) {
+        font-size: 1.5rem;
+    }
+`
+
+const TopTitle02 = styled(Box)`
+    display: flex;
+    width: 100%;
+    height: 80px;
+    align-items: center;
+    background-color: rgb(213 48 48);
+    border-radius: 8px 8px 0px 0px;
+    color: white;
+    font-size: 2rem;
+    font-weight: 600;
+    font-family: 'Changa One',sans-serif;
+    @media (max-width: 1200px) {
+        font-size: 1.7rem;
+    }
+    @media (max-width: 500px) {
+        font-size: 1.5rem;
+    }
+`
+
+const LeftText01 = styled(Box)`
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+    margin-left: 3%;
+    @media (max-width: 1200px) {
+        font-size: 1.7rem;
+    }
+    @media (max-width: 500px) {
+        font-size: 1.5rem;
+    }
+`
+const RightText01 = styled(Box)`
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    margin-right: 3%;
+`
+const TableContent = styled(Box)`
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    flex-direction: column;
+    align-items: center;
+`
+const RowText = styled(Box)`
+    display: flex;
+    flex: 1;
+    width: 90%;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color:rgb(84 84 84);
+    font-family: 'Changa One',sans-serif;
+    &:hover{
+        cursor: pointer;
+        transition: .3s;
+        color:rgb(247 148 31);
+    }
+    @media (max-width: 1200px) {
+        font-size: 1.2rem;
+    }
+    @media (max-width: 900px) {
+        font-size: 1.3rem;
+    }
+    @media (max-width: 500px) {
+        font-size: 1rem;
+    }
+`
+const LeftText02 = styled(Box)`
+    display: flex;
+    flex:1;
+    justify-content: flex-start;
+    align-items: center;
+
+`
+const RightText02 = styled(Box)`
+    display: flex;
+    flex:1;
+    justify-content: flex-end;
+    align-items: center;
+
+`
+
+export default Content;
