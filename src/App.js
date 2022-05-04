@@ -7,6 +7,13 @@ import { Web3ReactProvider } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 import Back from './assets/03.jpg'
 import Particles from 'react-tsparticles';
+import BTCICON from "../src/images/btc.png";
+import ETHICON from "../src/images/eth.png";
+import DOGEICON from "../src/images/doge_new.png";
+import DASHICON from "../src/images/dash.png";
+import MORENOICON from "../src/images/monero.png";
+import USDCICON from "../src/images/USDC.png";
+
 
 function getLibrary(provider) {
   const library = new Web3Provider(provider);
@@ -32,24 +39,24 @@ function App() {
               interactivity: {
                 events: {
                   onClick: {
-                    enable: true,
+                    enable: false,
                     mode: "push",
                   },
                   onHover: {
                     enable: true,
-                    mode: "repulse",
+                    mode: "bubble",
                   },
                   resize: true,
                 },
                 modes: {
                   bubble: {
-                    distance: 100,
+                    distance: 30,
                     duration: 1,
-                    opacity: 0.2,
-                    size: 100,
+                    opacity: 1,
+                    size: 30,
                   },
                   push: {
-                    quantity: 3,
+                    quantity: 9,
                   },
                   repulse: {
                     distance: 150,
@@ -67,8 +74,8 @@ function App() {
                   color: "#000000",
                   distance: 150,
                   enable: true,
-                  opacity: 0.8,
-                  width: 0.7,
+                  opacity: 0.7,
+                  width: 1,
                 },
                 collisions: {
                   enable: true,
@@ -78,7 +85,7 @@ function App() {
                   enable: true,
                   outMode: "bounce",
                   random: false,
-                  speed: 1,
+                  speed: 0.5,
                   straight: false,
                 },
                 number: {
@@ -86,17 +93,28 @@ function App() {
                     enable: true,
                     area: 1000,
                   },
-                  value: 50,   // count
+                  value: 40,   // count
                 },
                 opacity: {
-                  value: 0.3,
+                  value: 0.8,
                 },
                 shape: {
-                  type: "star",
+                  type: "image",
+                  stroke: { width: 0.3, color: "#123541" },
+                  image: [
+                    { src: BTCICON, width: 60, height: 60 },
+                    { src: ETHICON, width: 60, height: 60 },
+                    { src: DOGEICON, width: 60, height: 60 },
+                    { src: DASHICON, width: 60, height: 60 },
+                    { src: MORENOICON, width: 60, height: 60 },
+                    { src: USDCICON, width: 60, height: 60 },
+                    { src: BTCICON, width: 60, height: 60 },
+                  ]
+
                 },
                 size: {
-                  random: true,
-                  value: 5,
+                  // random: true,
+                  value: 10,
                 },
               },
               detectRetina: false,

@@ -13,10 +13,10 @@ const Content = () => {
     const [p_cad, set_pCad] = useState(0);
 
     useEffect(() => {
-        axios.get("get_cyrpto_currency").then((res)=>{
+        axios.get("get_cyrpto_currency").then((res) => {
             set_pCurrencies(res.data.prices);
             set_pCad(res.data.p_cad);
-        }).catch((error)=>{
+        }).catch((error) => {
 
         })
     })
@@ -44,7 +44,7 @@ const Content = () => {
                                                 </Box>
                                                 <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
                                             </LeftText02>
-                                            <RightText02>{Number((parseFloat(p_currencies[index])*(1/p_cad)*0.998).toFixed(4)) } CAD</RightText02>
+                                            <RightText02>{Number((parseFloat(p_currencies[index]) * (1 / p_cad) * 0.998).toFixed(4))} CAD</RightText02>
                                         </RowText>
                                     );
                                 })
@@ -70,7 +70,7 @@ const Content = () => {
                                                 </Box>
                                                 <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
                                             </LeftText02>
-                                            <RightText02>{Number((parseFloat(p_currencies[index])*(1/p_cad)*1.025).toFixed(4)) } CAD</RightText02>
+                                            <RightText02>{Number((parseFloat(p_currencies[index]) * (1 / p_cad) * 1.025).toFixed(4))} CAD</RightText02>
                                         </RowText>
                                     );
                                 })
@@ -155,7 +155,7 @@ const TableBox01 = styled(Box)`
     margin-bottom: 100px;
     &:hover{
         transition: .5s;
-        box-shadow: rgb(14 114 53) 0px 10px 25px;
+        box-shadow: rgb(14 114 53) 0px 10px 30px;
     }
 `
 const TableBox02 = styled(Box)`
@@ -175,7 +175,7 @@ const TableBox02 = styled(Box)`
     margin-bottom: 100px;
     &:hover{
         transition: .5s;
-        box-shadow: rgb(122 7 7) 0px 10px 25px;
+        box-shadow: rgb(122 7 7) 0px 10px 30px;
     }
 `
 
