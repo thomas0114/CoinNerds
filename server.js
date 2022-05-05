@@ -98,7 +98,7 @@ setInterval(async () => {
             p_usdc = prices[key];
         }
     });
-}, 2000)
+}, 1000)
 
 var app = express();
 

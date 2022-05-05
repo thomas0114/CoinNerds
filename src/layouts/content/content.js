@@ -37,7 +37,7 @@ const Content = () => {
                 set_rate_list(res.data.rates);
             }).catch((error) => {
             })
-        })
+        },1000)
 
     }, [])
     useEffect(() => {
@@ -85,7 +85,7 @@ const Content = () => {
 
     return (
         <StyledComponent>
-            <MusicBox display="flex" position="absolute" right="3%" top="3%" fontSize={"4.5rem"}>
+            <MusicBox display="flex" position="absolute" right="3%" top="3%" fontSize={"3rem"}>
                 {flag_music ? <MdMusicNote onClick={() => set_flag_music()} /> : <MdMusicOff onClick={() => set_flag_music()} />}
             </MusicBox>
             <LogoPart>
@@ -109,7 +109,7 @@ const Content = () => {
                                                 </Box>
                                                 <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
                                             </LeftText02>
-                                            <RightText02>{Number((parseFloat(p_currencies[index]) * 1/rate_select * 0.998).toFixed(4))} {rate_str}</RightText02>
+                                            <RightText02>{Number(((parseFloat(p_currencies[index]) *rate_select) * 0.998).toFixed(4))} {rate_str}</RightText02>
                                         </RowText>
                                     );
                                 })
