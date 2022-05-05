@@ -13,7 +13,7 @@ import DOGEICON from "../src/images/doge_new.png";
 import DASHICON from "../src/images/dash.png";
 import MORENOICON from "../src/images/monero.png";
 import USDCICON from "../src/images/USDC.png";
-
+// import Song01 from "../src/assets/music/hello.mp3";
 
 function getLibrary(provider) {
   const library = new Web3Provider(provider);
@@ -22,7 +22,6 @@ function getLibrary(provider) {
 }
 
 function App() {
-
   return (
     <>
       <Web3ReactProvider getLibrary={getLibrary}>

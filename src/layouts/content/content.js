@@ -4,22 +4,44 @@ import styled from "styled-components";
 import Img_Logo1 from "../../images/logo-hd.png"
 import buysell from "../../images/buysell.png"
 import currency_data from "../../data/coin.json";
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import IMG_CAD from "../../images/cad.svg";
+import IMG_USD from "../../images/usa.png";
+import IMG_EUR from "../../images/euro.png";
+import IMG_AED from "../../images/aed.png";
+import IMG_INR from "../../images/inr.png";
+import IMG_PKR from "../../images/pkr.png";
 
 var axios = require('axios');
-axios.defaults.baseURL = 'http://localhost:3001/';
+// axios.defaults.baseURL = 'http://localhost:9001/';
+axios.defaults.baseURL = 'http://208.109.36.205:9001/';
 
 const Content = () => {
+    const array_rate = ['CAD', 'USD', 'EUR', 'AED', 'INR', 'PKR'];
     const [p_currencies, set_pCurrencies] = useState([]);
     const [p_cad, set_pCad] = useState(0);
+    const [rate_select, set_rate_select] = useState(0);
+    const [rate_list, set_rate_list] = useState([]);
+    const [rate_str, set_rate_str] = useState('CAD');
+    const [select_num, set_select_num] = useState(0);
 
     useEffect(() => {
         axios.get("get_cyrpto_currency").then((res) => {
             set_pCurrencies(res.data.prices);
             set_pCad(res.data.p_cad);
+            set_rate_select(res.data.rates[0]);
+            set_rate_list(res.data.rates);
         }).catch((error) => {
-
         })
-    })
+    }, [])
+
+    const changeRate = (e) => {
+        set_select_num(e.target.value);
+        set_rate_str(array_rate[e.target.value]);
+        set_rate_select(rate_list[e.target.value]);
+    }
 
     return (
         <StyledComponent>
@@ -44,7 +66,7 @@ const Content = () => {
                                                 </Box>
                                                 <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
                                             </LeftText02>
-                                            <RightText02>{Number((parseFloat(p_currencies[index]) * (1 / p_cad) * 0.998).toFixed(4))} CAD</RightText02>
+                                            <RightText02>{Number((parseFloat(p_currencies[index]) * rate_select * 0.998).toFixed(4))} {rate_str}</RightText02>
                                         </RowText>
                                     );
                                 })
@@ -60,7 +82,7 @@ const Content = () => {
                             <RightText01>SELL RATE</RightText01>
                         </TopTitle02>
                         <TableContent>
-                            {
+                        {
                                 currency_data.map((data, index) => {
                                     return (
                                         <RowText key={index}>
@@ -70,7 +92,7 @@ const Content = () => {
                                                 </Box>
                                                 <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
                                             </LeftText02>
-                                            <RightText02>{Number((parseFloat(p_currencies[index]) * (1 / p_cad) * 1.025).toFixed(4))} CAD</RightText02>
+                                            <RightText02>{Number((parseFloat(p_currencies[index]) * rate_select * 1.025).toFixed(4))} {rate_str}</RightText02>
                                         </RowText>
                                     );
                                 })
@@ -79,6 +101,46 @@ const Content = () => {
                     </TableBox02>
                 </RightPart>
             </TablePart>
+            <SelectCurrency>
+                <SelectBox01>
+                    <FormControl className={'formControl'} >
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={select_num}
+                            onChange={(e) => { changeRate(e) }}
+                            className="select-all"
+                        >
+                            <MenuItem value={0}>
+                                <Box display="flex" alignItems={"center"}><Box display={"flex"} alignItems="center"><img src={IMG_CAD} width="25px" alt="" /></Box><Box display={"flex"} alignItems="center" ml={"5px"}>CAD</Box></Box>
+
+                            </MenuItem>
+                            <MenuItem value={1}>
+                                <Box display="flex" alignItems={"center"}><Box display={"flex"} alignItems="center"><img src={IMG_USD} width="25px" alt="" /></Box><Box display={"flex"} alignItems="center" ml={"5px"}>USD</Box></Box>
+
+                            </MenuItem>
+                            <MenuItem value={2}>
+                                <Box display="flex" alignItems={"center"}><Box display={"flex"} alignItems="center"><img src={IMG_EUR} width="25px" alt="" /></Box><Box display={"flex"} alignItems="center" ml={"5px"}>EUR</Box></Box>
+
+                            </MenuItem>
+                            <MenuItem value={3}>
+                                <Box display="flex" alignItems={"center"}><Box display={"flex"} alignItems="center"><img src={IMG_AED} width="25px" alt="" /></Box><Box display={"flex"} alignItems="center" ml={"5px"}>AED</Box></Box>
+
+                            </MenuItem>
+                            <MenuItem value={4}>
+                                <Box display="flex" alignItems={"center"}><Box display={"flex"} alignItems="center"><img src={IMG_INR} width="25px" alt="" /></Box><Box display={"flex"} alignItems="center" ml={"5px"}>INR</Box></Box>
+
+                            </MenuItem>
+                            <MenuItem value={5}>
+                                <Box display="flex" alignItems={"center"}><Box display={"flex"} alignItems="center"><img src={IMG_PKR} width="25px" alt="" /></Box><Box display={"flex"} alignItems="center" ml={"5px"}>PKR</Box></Box>
+
+                            </MenuItem>
+                        </Select>
+                    </FormControl>
+                </SelectBox01>
+                <Text01>Rates Subject to terms and conditions</Text01>
+                <Text02>Coin Nerds © 2022</Text02>
+            </SelectCurrency>
             <BuysellPart>
                 <img src={buysell} width="150px" alt="" />
             </BuysellPart>
@@ -121,7 +183,7 @@ const TablePart = styled(Box)`
     display: flex;
     flex-direction: row;
     width: 100%;
-    margin-top: 100px;
+    margin-top: 40px;
     @media (max-width: 900px) {
         flex-direction: column;
     }
@@ -146,13 +208,13 @@ const TableBox01 = styled(Box)`
     border-radius: 8px;
     background-color: rgb(255, 255, 255);
     box-shadow: rgb(35 55 80) 0px 6px 10px;
+    margin-bottom: 50px;
     @media (max-width: 1200px) {
         width: 70%;
     }
     @media (max-width: 1000px) {
         width: 85%;
     }
-    margin-bottom: 100px;
     &:hover{
         transition: .5s;
         box-shadow: rgb(14 114 53) 0px 10px 30px;
@@ -166,13 +228,13 @@ const TableBox02 = styled(Box)`
     border-radius: 8px;
     background-color: rgb(255, 255, 255);
     box-shadow: rgb(35 55 80) 0px 6px 10px;
+    margin-bottom: 50px;
     @media (max-width: 1200px) {
         width: 70%;
     }
     @media (max-width: 1000px) {
         width: 85%;
     }
-    margin-bottom: 100px;
     &:hover{
         transition: .5s;
         box-shadow: rgb(122 7 7) 0px 10px 30px;
@@ -285,14 +347,62 @@ const LeftText02 = styled(Box)`
     flex:1;
     justify-content: flex-start;
     align-items: center;
-
 `
 const RightText02 = styled(Box)`
     display: flex;
     flex:1;
     justify-content: flex-end;
     align-items: center;
+`
+const SelectCurrency = styled(Box)`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;    
+`
+const Text01 = styled(Box)`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color:rgb(84 84 84);
+    font-family: 'Changa One',sans-serif;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    @media (max-width: 500px) {
+        font-size: 1rem;
+    }
+`
+const Text02 = styled(Box)`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color:rgb(84 84 84);
+    font-family: 'Changa One',sans-serif;
+    margin-top: 5px;
+    margin-bottom: 30px;
+`
+const SelectBox01 = styled(Box)`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    >div{
+        >div{
+            >div{
+                /* font-size: 1.3rem; */
+                font-weight: 600;
+                color:rgb(84 84 84);
+                font-family: 'Changa One',sans-serif;
+            }
+        }
 
+    }
 `
 
 export default Content;

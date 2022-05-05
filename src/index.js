@@ -7,9 +7,9 @@ import '../src/font/ChangaOne-Italic.ttf';
 import '../src/font/ChangaOne-Regular.ttf';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  // <React.StrictMode>
+    <App />,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 
