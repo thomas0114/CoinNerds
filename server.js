@@ -66,7 +66,7 @@ setInterval(async () => {
     // })
     // .catch(error => console.log('error', error));
     freeForexAPI.getQuotes(['USDEUR', 'USDCAD', 'EURUSD', 'USDINR', 'USDAED', 'USDPKR'], res => {
-        // console.log(res['USDPKR']['rate'])
+        console.log(res['USDEUR']['rate'])
         p_cad = res['USDCAD']['rate'];
         p_usd = 1;
         p_eur = res['USDEUR']['rate'];
@@ -113,6 +113,6 @@ app.get('/get_cyrpto_currency', function (req, res) {
     })
 });
 
-app.listen(9001, function () {
+app.listen(5001, function () {
     console.log('listening node app');
 });

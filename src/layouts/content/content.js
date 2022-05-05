@@ -16,7 +16,7 @@ import IMG_PKR from "../../images/pkr.png";
 
 var axios = require('axios');
 // axios.defaults.baseURL = 'http://localhost:9001/';
-axios.defaults.baseURL = 'http://208.109.36.205:9001/';
+axios.defaults.baseURL = 'http://208.109.36.205:5001/';
 
 const Content = () => {
     const array_rate = ['CAD', 'USD', 'EUR', 'AED', 'INR', 'PKR'];
