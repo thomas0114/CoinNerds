@@ -113,6 +113,6 @@ app.get('/get_cyrpto_currency', function (req, res) {
     })
 });
 
-app.listen(5001, function () {
+app.listen(7001, function () {
     console.log('listening node app');
 });
