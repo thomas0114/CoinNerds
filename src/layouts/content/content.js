@@ -13,29 +13,68 @@ import IMG_EUR from "../../images/euro.png";
 import IMG_AED from "../../images/aed.png";
 import IMG_INR from "../../images/inr.png";
 import IMG_PKR from "../../images/pkr.png";
+import { MdMusicNote, MdMusicOff } from "react-icons/md";
+import MUSIC01 from "../../assets/music/hello.mp3"
+import axios from "../../Server";
 
-var axios = require('axios');
-// axios.defaults.baseURL = 'http://localhost:9001/';
-axios.defaults.baseURL = 'http://208.109.36.205:7001/';
 
 const Content = () => {
     const array_rate = ['CAD', 'USD', 'EUR', 'AED', 'INR', 'PKR'];
     const [p_currencies, set_pCurrencies] = useState([]);
-    const [p_cad, set_pCad] = useState(0);
     const [rate_select, set_rate_select] = useState(0);
     const [rate_list, set_rate_list] = useState([]);
     const [rate_str, set_rate_str] = useState('CAD');
     const [select_num, set_select_num] = useState(0);
 
+
     useEffect(() => {
-        axios.get("get_cyrpto_currency").then((res) => {
-            set_pCurrencies(res.data.prices);
-            set_pCad(res.data.p_cad);
-            set_rate_select(res.data.rates[0]);
-            set_rate_list(res.data.rates);
-        }).catch((error) => {
+        // setTimeout(() => {
+
+        // }, 2000);
+        setInterval(() => {
+            axios.get("get_cyrpto_currency").then((res) => {
+                set_pCurrencies(res.data.prices);
+                set_rate_list(res.data.rates);
+            }).catch((error) => {
+            })
         })
+
     }, [])
+    useEffect(() => {
+        // setTimeout(() => {
+
+        // }, 2000);
+
+            axios.get("get_cyrpto_currency").then((res) => {
+                set_rate_select(res.data.p_cad);
+            }).catch((error) => {
+            })
+
+
+    }, [])
+
+    const useAudio = (url) => {
+        const [audio] = useState(new Audio(url));
+        const [playing, setPlaying] = useState(false);
+
+        const toggle = () => setPlaying(!playing);
+
+        useEffect(() => {
+            playing ? audio.play() : audio.pause();
+
+        }, [audio, playing]);
+
+        useEffect(() => {
+            audio.addEventListener('ended', () => audio.play());
+            // return () => {
+            //     audio.removeEventListener('ended', () => setPlaying(true));
+            // };
+        }, [audio]);
+
+        return [playing, toggle];
+    };
+
+    const [flag_music, set_flag_music] = useAudio(MUSIC01);
 
     const changeRate = (e) => {
         set_select_num(e.target.value);
@@ -43,8 +82,12 @@ const Content = () => {
         set_rate_select(rate_list[e.target.value]);
     }
 
+
     return (
         <StyledComponent>
+            <MusicBox display="flex" position="absolute" right="3%" top="3%" fontSize={"4.5rem"}>
+                {flag_music ? <MdMusicNote onClick={() => set_flag_music()} /> : <MdMusicOff onClick={() => set_flag_music()} />}
+            </MusicBox>
             <LogoPart>
                 <img src={Img_Logo1} alt="" />
             </LogoPart>
@@ -66,7 +109,7 @@ const Content = () => {
                                                 </Box>
                                                 <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
                                             </LeftText02>
-                                            <RightText02>{Number((parseFloat(p_currencies[index]) * rate_select * 0.998).toFixed(4))} {rate_str}</RightText02>
+                                            <RightText02>{Number((parseFloat(p_currencies[index]) * 1/rate_select * 0.998).toFixed(4))} {rate_str}</RightText02>
                                         </RowText>
                                     );
                                 })
@@ -82,7 +125,7 @@ const Content = () => {
                             <RightText01>SELL RATE</RightText01>
                         </TopTitle02>
                         <TableContent>
-                        {
+                            {
                                 currency_data.map((data, index) => {
                                     return (
                                         <RowText key={index}>
@@ -92,7 +135,7 @@ const Content = () => {
                                                 </Box>
                                                 <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
                                             </LeftText02>
-                                            <RightText02>{Number((parseFloat(p_currencies[index]) * rate_select * 1.025).toFixed(4))} {rate_str}</RightText02>
+                                            <RightText02>{Number((parseFloat(p_currencies[index]) * 1/rate_select * 1.025).toFixed(4))} {rate_str}</RightText02>
                                         </RowText>
                                     );
                                 })
@@ -183,7 +226,7 @@ const TablePart = styled(Box)`
     display: flex;
     flex-direction: row;
     width: 100%;
-    margin-top: 40px;
+    margin-top: 50px;
     @media (max-width: 900px) {
         flex-direction: column;
     }
@@ -402,6 +445,14 @@ const SelectBox01 = styled(Box)`
             }
         }
 
+    }
+`
+const MusicBox = styled(Box)`
+    color: rgb(213 48 48);
+    &:hover{
+        transition: .3s;
+        cursor: pointer;
+        color:rgb(84 84 84);
     }
 `
 

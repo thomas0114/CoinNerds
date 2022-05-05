@@ -66,17 +66,19 @@ setInterval(async () => {
     // })
     // .catch(error => console.log('error', error));
     freeForexAPI.getQuotes(['USDEUR', 'USDCAD', 'EURUSD', 'USDINR', 'USDAED', 'USDPKR'], res => {
-        console.log(res['USDEUR']['rate'])
-        p_cad = res['USDCAD']['rate'];
+
+        // console.log(res['USDPKR']['rate'])
+        p_cad = 1/res['USDCAD']['rate'];
         p_usd = 1;
-        p_eur = res['USDEUR']['rate'];
-        p_aed = res['USDAED']['rate'];
-        p_inr = res['USDINR']['rate'];
-        p_pkr = res['USDPKR']['rate'];
+        p_eur = 1/res['USDEUR']['rate'];
+        p_aed = 1/res['USDAED']['rate'];
+        p_inr = 1/res['USDINR']['rate'];
+        p_pkr = 1/res['USDPKR']['rate'];
 
     })
     const prices = await Binance_client.prices()
     Object.keys(prices).forEach(function (key) {
+
         if (key === 'BTCUSDT') {
             p_btc = prices[key];
         }
@@ -96,7 +98,7 @@ setInterval(async () => {
             p_usdc = prices[key];
         }
     });
-}, 3000)
+}, 2000)
 
 var app = express();
 
@@ -110,9 +112,10 @@ app.get('/get_cyrpto_currency', function (req, res) {
         success: 1,
         prices: vaules,
         rates: rates,
+        p_cad: p_cad,
     })
 });
 
-app.listen(7001, function () {
+app.listen(9001, function () {
     console.log('listening node app');
 });
