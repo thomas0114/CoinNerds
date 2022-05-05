@@ -13,7 +13,7 @@ import IMG_EUR from "../../images/euro.png";
 import IMG_AED from "../../images/aed.png";
 import IMG_INR from "../../images/inr.png";
 import IMG_PKR from "../../images/pkr.png";
-import { MdMusicNote, MdMusicOff } from "react-icons/md";
+import { MdMusicNote, MdMusicOff, MdToggleOn, MdToggleOff } from "react-icons/md";
 import MUSIC01 from "../../assets/music/hello.mp3"
 import axios from "../../Server";
 
@@ -85,8 +85,8 @@ const Content = () => {
 
     return (
         <StyledComponent>
-            <MusicBox display="flex" position="absolute" right="3%" top="3%" fontSize={"3rem"}>
-                {flag_music ? <MdMusicNote onClick={() => set_flag_music()} /> : <MdMusicOff onClick={() => set_flag_music()} />}
+            <MusicBox display="flex" position="absolute" right="3%" top="3%" fontSize={"3.5rem"}>
+                {flag_music ? <MdToggleOn color="rgb(213 48 48)"  onClick={() => set_flag_music()} /> : <MdToggleOff  color="rgb(84 84 84)" onClick={() => set_flag_music()} />}
             </MusicBox>
             <LogoPart>
                 <img src={Img_Logo1} alt="" />
@@ -448,7 +448,6 @@ const SelectBox01 = styled(Box)`
     }
 `
 const MusicBox = styled(Box)`
-    color: rgb(213 48 48);
     &:hover{
         transition: .3s;
         cursor: pointer;
