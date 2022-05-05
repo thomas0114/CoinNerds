@@ -1,16 +1,18 @@
 var express = require('express');
 var cors = require('cors');
 
-const { Headers } = require('node-fetch');
-// var freeForexAPI = require('freeforexapi');
-var myHeaders = new Headers();
-myHeaders.append("apikey", "b6LGL9i7bzi1Zyvrt3278rL53rBJjQzG");
+// const { Headers } = require('node-fetch');
+var freeForexAPI = require('freeforexapi');
+// var myHeaders = new Headers();
+// // myHeaders.append("apikey", "b6LGL9i7bzi1Zyvrt3278rL53rBJjQzG");
+// myHeaders.append("apikey", "CsMDChXxpUAacmga1g5n20D5ulpaEeTv");
 
-var requestOptions = {
-    method: 'GET',
-    redirect: 'follow',
-    headers: myHeaders
-};
+
+// var requestOptions = {
+//     method: 'GET',
+//     redirect: 'follow',
+//     headers: myHeaders
+// };
 
 
 const Binance = require('binance-api-node').default;
@@ -49,26 +51,30 @@ setInterval(async () => {
     //     );
     // }
 
-    const symbols = ['CAD', 'USD', 'EUR', 'AED', 'INR', 'PKR'];
+    // const symbols = ['CAD', 'USD', 'EUR', 'AED', 'INR', 'PKR'];
 
-    fetch(`https://api.apilayer.com/exchangerates_data/latest?symbols=${symbols}&base=USD`, requestOptions)
-    .then(response => response.json())
-    .then(res => {
-        p_cad = res.rates.CAD;
-        p_usd = res.rates.USD;
-        p_eur = res.rates.EUR;
-        p_aed = res.rates.AED;
-        p_inr = res.rates.INR;
-        p_pkr = res.rates.PKR;
-    })
-    .catch(error => console.log('error', error));
-    // freeForexAPI.getQuotes(['USDEUR', 'USDCAD', 'EURUSD', 'USDINR', 'USDAED', 'USDPKR'], res => {
-    //     p_eur = res['EURUSD']['rate'];
-    //     p_aed = 1 / res['USDAED']['rate'];
-    //     p_inr = 1 / res['USDINR']['rate'];
-    //     p_pkr = 1 / res['USDPKR']['rate'];
-    //     p_cad = 1 / res['USDCAD']['rate']
+    // fetch(`https://api.apilayer.com/exchangerates_data/latest?symbols=${symbols}&base=USD`, requestOptions)
+    // .then(response => response.json())
+    // .then(res => {
+    //     // console.log(res)
+    //     p_cad = res.rates.CAD;
+    //     p_usd = res.rates.USD;
+    //     p_eur = res.rates.EUR;
+    //     p_aed = res.rates.AED;
+    //     p_inr = res.rates.INR;
+    //     p_pkr = res.rates.PKR;
     // })
+    // .catch(error => console.log('error', error));
+    freeForexAPI.getQuotes(['USDEUR', 'USDCAD', 'EURUSD', 'USDINR', 'USDAED', 'USDPKR'], res => {
+        // console.log(res['USDPKR']['rate'])
+        p_cad = res['USDCAD']['rate'];
+        p_usd = 1;
+        p_eur = res['USDEUR']['rate'];
+        p_aed = res['USDAED']['rate'];
+        p_inr = res['USDINR']['rate'];
+        p_pkr = res['USDPKR']['rate'];
+
+    })
     const prices = await Binance_client.prices()
     Object.keys(prices).forEach(function (key) {
         if (key === 'BTCUSDT') {
