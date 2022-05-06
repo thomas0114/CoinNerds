@@ -16,6 +16,7 @@ import IMG_PKR from "../../images/pkr.png";
 import { MdToggleOn, MdToggleOff } from "react-icons/md";
 import MUSIC01 from "../../assets/music/hello.mp3"
 import axios from "../../Server";
+import multiplyer from "../../config";
 
 
 const Content = () => {
@@ -25,16 +26,13 @@ const Content = () => {
     const [rate_list, set_rate_list] = useState([]);
     const [rate_str, set_rate_str] = useState('CAD');
     const [select_num, set_select_num] = useState(0);
-    const markup_buy = [0.9985, 0.995, 0.99, 0.99, 0.99, 0.9930, 0.9930, 0.98, 0.98, 0.98];
-    const markup_sell = [1.0015, 1.005, 1.01, 1.01, 1.01, 1.0070, 1.0070, 1.02, 1.02, 1.02];
+    const markdown_buy = multiplyer['markdown_buy'];
+    const markup_sell = multiplyer['markup_sell'];
 
     useEffect(() => {
-        // setTimeout(() => 
-        // }, 2000);
         setInterval(() => {
             axios.get("get_cyrpto_currency").then((res) => {
                 set_pCurrencies(res.data.prices);
-                console.log(res.data.prices[6])
                 set_rate_list(res.data.rates);
             }).catch((error) => {
             })
@@ -86,9 +84,6 @@ const Content = () => {
 
     return (
         <StyledComponent>
-            <MusicBox display="flex" position="absolute" right="3%" top="3%" fontSize={"3.5rem"}>
-                {flag_music ? <MdToggleOn color="rgb(213 48 48)" onClick={() => set_flag_music()} /> : <MdToggleOff color="rgb(84 84 84)" onClick={() => set_flag_music()} />}
-            </MusicBox>
             <LogoPart>
                 <img src={Img_Logo1} alt="" />
             </LogoPart>
@@ -102,17 +97,33 @@ const Content = () => {
                         <TableContent>
                             {
                                 currency_data.map((data, index) => {
-                                    return (
-                                        <RowText key={index}>
-                                            <LeftText02>
-                                                <Box display="flex" alignItems="center">
-                                                    <img src={data.image_url} width="25px" alt="" />
-                                                </Box>
-                                                <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
-                                            </LeftText02>
-                                            <RightText02>{(p_currencies[index] * rate_select * markup_buy[index]).toFixed(4)} {rate_str}</RightText02>
-                                        </RowText>
-                                    );
+                                    if (index < 5) {
+                                        return (
+                                            <RowText key={index}>
+                                                <LeftText02>
+                                                    <Box display="flex" alignItems="center">
+                                                        <img src={data.image_url} width="25px" alt="" />
+                                                    </Box>
+                                                    <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
+                                                </LeftText02>
+                                                <RightText02>{Number((p_currencies[index] * rate_select * markdown_buy[index])).toFixed(2)} {rate_str}</RightText02>
+                                            </RowText>
+                                        );
+                                    }
+                                    else {
+                                        return (
+                                            <RowText key={index}>
+                                                <LeftText02>
+                                                    <Box display="flex" alignItems="center">
+                                                        <img src={data.image_url} width="25px" alt="" />
+                                                    </Box>
+                                                    <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
+                                                </LeftText02>
+                                                <RightText02>{Number((p_currencies[index] * rate_select * markdown_buy[index])).toFixed(4)} {rate_str}</RightText02>
+                                            </RowText>
+                                        );
+                                    }
+
                                 })
                             }
                         </TableContent>
@@ -128,17 +139,32 @@ const Content = () => {
                         <TableContent>
                             {
                                 currency_data.map((data, index) => {
-                                    return (
-                                        <RowText key={index}>
-                                            <LeftText02>
-                                                <Box display="flex" alignItems="center">
-                                                    <img src={data.image_url} width="25px" alt="" />
-                                                </Box>
-                                                <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
-                                            </LeftText02>
-                                            <RightText02>{Number((parseFloat(p_currencies[index]) * rate_select * markup_sell[index]).toFixed(4))} {rate_str}</RightText02>
-                                        </RowText>
-                                    );
+                                    if (index < 5) {
+                                        return (
+                                            <RowText key={index}>
+                                                <LeftText02>
+                                                    <Box display="flex" alignItems="center">
+                                                        <img src={data.image_url} width="25px" alt="" />
+                                                    </Box>
+                                                    <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
+                                                </LeftText02>
+                                                <RightText02>{Number((parseFloat(p_currencies[index]) * rate_select * markup_sell[index]).toFixed(2))} {rate_str}</RightText02>
+                                            </RowText>
+                                        );
+                                    }
+                                    else {
+                                        return (
+                                            <RowText key={index}>
+                                                <LeftText02>
+                                                    <Box display="flex" alignItems="center">
+                                                        <img src={data.image_url} width="25px" alt="" />
+                                                    </Box>
+                                                    <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
+                                                </LeftText02>
+                                                <RightText02>{Number((parseFloat(p_currencies[index]) * rate_select * markup_sell[index]).toFixed(4))} {rate_str}</RightText02>
+                                            </RowText>
+                                        );
+                                    }
                                 })
                             }
                         </TableContent>
@@ -146,42 +172,53 @@ const Content = () => {
                 </RightPart>
             </TablePart>
             <SelectCurrency>
-                <SelectBox01>
-                    <FormControl className={'formControl'} >
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={select_num}
-                            onChange={(e) => { changeRate(e) }}
-                            className="select-all"
-                        >
-                            <MenuItem value={0}>
-                                <Box display="flex" alignItems={"center"}><Box display={"flex"} alignItems="center"><img src={IMG_CAD} width="25px" alt="" /></Box><Box display={"flex"} alignItems="center" ml={"5px"}>CAD</Box></Box>
+                <Box display="flex" alignItems="center">
+                    <Text01 display={"flex"} mr="3px" >
+                        Currency:
+                    </Text01>
+                    <SelectBox01>
+                        <FormControl className={'formControl'} >
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={select_num}
+                                onChange={(e) => { changeRate(e) }}
+                                className="select-all"
+                            >
+                                <MenuItem value={0}>
+                                    <Box display="flex" alignItems={"center"}><Box display={"flex"} alignItems="center"><img src={IMG_CAD} width="25px" alt="" /></Box><Box display={"flex"} alignItems="center" ml={"5px"}>CAD</Box></Box>
 
-                            </MenuItem>
-                            <MenuItem value={1}>
-                                <Box display="flex" alignItems={"center"}><Box display={"flex"} alignItems="center"><img src={IMG_USD} width="25px" alt="" /></Box><Box display={"flex"} alignItems="center" ml={"5px"}>USD</Box></Box>
+                                </MenuItem>
+                                <MenuItem value={1}>
+                                    <Box display="flex" alignItems={"center"}><Box display={"flex"} alignItems="center"><img src={IMG_USD} width="25px" alt="" /></Box><Box display={"flex"} alignItems="center" ml={"5px"}>USD</Box></Box>
 
-                            </MenuItem>
-                            <MenuItem value={2}>
-                                <Box display="flex" alignItems={"center"}><Box display={"flex"} alignItems="center"><img src={IMG_EUR} width="25px" alt="" /></Box><Box display={"flex"} alignItems="center" ml={"5px"}>EUR</Box></Box>
+                                </MenuItem>
+                                <MenuItem value={2}>
+                                    <Box display="flex" alignItems={"center"}><Box display={"flex"} alignItems="center"><img src={IMG_EUR} width="25px" alt="" /></Box><Box display={"flex"} alignItems="center" ml={"5px"}>EUR</Box></Box>
 
-                            </MenuItem>
-                            <MenuItem value={3}>
-                                <Box display="flex" alignItems={"center"}><Box display={"flex"} alignItems="center"><img src={IMG_AED} width="25px" alt="" /></Box><Box display={"flex"} alignItems="center" ml={"5px"}>AED</Box></Box>
+                                </MenuItem>
+                                <MenuItem value={3}>
+                                    <Box display="flex" alignItems={"center"}><Box display={"flex"} alignItems="center"><img src={IMG_AED} width="25px" alt="" /></Box><Box display={"flex"} alignItems="center" ml={"5px"}>AED</Box></Box>
 
-                            </MenuItem>
-                            <MenuItem value={4}>
-                                <Box display="flex" alignItems={"center"}><Box display={"flex"} alignItems="center"><img src={IMG_INR} width="25px" alt="" /></Box><Box display={"flex"} alignItems="center" ml={"5px"}>INR</Box></Box>
+                                </MenuItem>
+                                <MenuItem value={4}>
+                                    <Box display="flex" alignItems={"center"}><Box display={"flex"} alignItems="center"><img src={IMG_INR} width="25px" alt="" /></Box><Box display={"flex"} alignItems="center" ml={"5px"}>INR</Box></Box>
 
-                            </MenuItem>
-                            <MenuItem value={5}>
-                                <Box display="flex" alignItems={"center"}><Box display={"flex"} alignItems="center"><img src={IMG_PKR} width="25px" alt="" /></Box><Box display={"flex"} alignItems="center" ml={"5px"}>PKR</Box></Box>
+                                </MenuItem>
+                                <MenuItem value={5}>
+                                    <Box display="flex" alignItems={"center"}><Box display={"flex"} alignItems="center"><img src={IMG_PKR} width="25px" alt="" /></Box><Box display={"flex"} alignItems="center" ml={"5px"}>PKR</Box></Box>
 
-                            </MenuItem>
-                        </Select>
-                    </FormControl>
-                </SelectBox01>
+                                </MenuItem>
+                            </Select>
+                        </FormControl>
+                    </SelectBox01>
+                    <Text01 mr="3px" ml="30px">
+                        Music:
+                    </Text01>
+                    <MusicBox display="flex" fontSize={"3.5rem"}>
+                        {flag_music ? <MdToggleOn color="rgb(213 48 48)" onClick={() => set_flag_music()} /> : <MdToggleOff color="rgb(84 84 84)" onClick={() => set_flag_music()} />}
+                    </MusicBox>
+                </Box>
                 <Text01>Rates Subject to terms and conditions</Text01>
                 <Text02>Coin Nerds © 2022</Text02>
             </SelectCurrency>
