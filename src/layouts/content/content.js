@@ -13,7 +13,7 @@ import IMG_EUR from "../../images/euro.png";
 import IMG_AED from "../../images/aed.png";
 import IMG_INR from "../../images/inr.png";
 import IMG_PKR from "../../images/pkr.png";
-import { MdMusicNote, MdMusicOff, MdToggleOn, MdToggleOff } from "react-icons/md";
+import { MdToggleOn, MdToggleOff } from "react-icons/md";
 import MUSIC01 from "../../assets/music/hello.mp3"
 import axios from "../../Server";
 
@@ -136,7 +136,7 @@ const Content = () => {
                                                 </Box>
                                                 <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
                                             </LeftText02>
-                                            <RightText02>{Number((parseFloat(p_currencies[index]) * rate_select * (1 / markup_sell[index])).toFixed(4))} {rate_str}</RightText02>
+                                            <RightText02>{Number((parseFloat(p_currencies[index]) * rate_select * markup_sell[index]).toFixed(4))} {rate_str}</RightText02>
                                         </RowText>
                                     );
                                 })
