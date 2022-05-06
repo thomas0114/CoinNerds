@@ -31,6 +31,12 @@ let p_eur = 0;
 let p_aed = 0;
 let p_inr = 0;
 let p_pkr = 0;
+let p_cad1 = 0;
+let p_usd1 = 0;
+let p_eur1 = 0;
+let p_aed1 = 0;
+let p_inr1 = 0;
+let p_pkr1 = 0;
 
 
 
@@ -67,35 +73,41 @@ setInterval(async () => {
     // .catch(error => console.log('error', error));
     freeForexAPI.getQuotes(['USDEUR', 'USDCAD', 'EURUSD', 'USDINR', 'USDAED', 'USDPKR'], res => {
 
-        // console.log(res['USDPKR']['rate'])
+        // console.log(1/res['USDEUR']['rate'])
         p_cad = 1/res['USDCAD']['rate'];
         p_usd = 1;
         p_eur = 1/res['USDEUR']['rate'];
         p_aed = 1/res['USDAED']['rate'];
         p_inr = 1/res['USDINR']['rate'];
         p_pkr = 1/res['USDPKR']['rate'];
+        p_cad1 = res['USDCAD']['rate'];
+        p_usd1 = 1;
+        p_eur1 = res['USDEUR']['rate'];
+        p_aed1 = res['USDAED']['rate'];
+        p_inr1 = res['USDINR']['rate'];
+        p_pkr1 = res['USDPKR']['rate'];
 
     })
     const prices = await Binance_client.prices()
     Object.keys(prices).forEach(function (key) {
 
         if (key === 'BTCUSDT') {
-            p_btc = prices[key];
+            p_btc = Number(prices[key]);
         }
         if (key === 'ETHUSDT') {
-            p_eth = prices[key];
+            p_eth = Number(prices[key]);
         }
         if (key === 'DOGEUSDT') {
-            p_doge = prices[key];
+            p_doge = Number(prices[key]);
         }
         if (key === 'DASHUSDT') {
-            p_dash = prices[key];
+            p_dash = Number(prices[key]);
         }
         if (key === 'XMRUSDT') {
-            p_xmr = prices[key];
+            p_xmr = Number(prices[key]);
         }
         if (key === 'USDCUSDT') {
-            p_usdc = prices[key];
+            p_usdc = Number(prices[key]);
         }
     });
 }, 1000)
@@ -107,12 +119,13 @@ app.use(cors())
 app.get('/get_cyrpto_currency', function (req, res) {
 
     let vaules = [p_btc, p_eth, p_doge, p_dash, p_xmr, p_usdc, p_eur, p_aed, p_inr, p_pkr];
-    let rates = [p_cad, p_usd,  p_eur, p_aed, p_inr, p_pkr];
+    let rates = [p_cad1, p_usd1,  p_eur1, p_aed1, p_inr1, p_pkr1];
+
     res.send({
         success: 1,
         prices: vaules,
         rates: rates,
-        p_cad: p_cad,
+        p_cad: p_cad1,
     })
 });
 

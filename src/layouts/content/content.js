@@ -25,7 +25,8 @@ const Content = () => {
     const [rate_list, set_rate_list] = useState([]);
     const [rate_str, set_rate_str] = useState('CAD');
     const [select_num, set_select_num] = useState(0);
-
+    const markup_buy =[0.997, 0.995, 0.998, 0.999, 0.998, 0.998, 0.95, 0.95, 0.95, 0.95];
+    const markup_sell =[1.003, 1.005, 1.025 ,1.001,1.025, 1.025, 1.05, 1.05, 1.05, 1.05];
 
     useEffect(() => {
         // setTimeout(() => {
@@ -109,7 +110,7 @@ const Content = () => {
                                                 </Box>
                                                 <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
                                             </LeftText02>
-                                            <RightText02>{Number(((parseFloat(p_currencies[index]) *rate_select) * 0.998).toFixed(4))} {rate_str}</RightText02>
+                                            <RightText02>{(p_currencies[index]* rate_select * markup_buy[index]).toFixed(4)} {rate_str}</RightText02>
                                         </RowText>
                                     );
                                 })
@@ -135,7 +136,7 @@ const Content = () => {
                                                 </Box>
                                                 <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
                                             </LeftText02>
-                                            <RightText02>{Number((parseFloat(p_currencies[index]) * 1/rate_select * 1.025).toFixed(4))} {rate_str}</RightText02>
+                                            <RightText02>{Number((parseFloat(p_currencies[index]) * rate_select * markup_sell[index]).toFixed(4))} {rate_str}</RightText02>
                                         </RowText>
                                     );
                                 })
