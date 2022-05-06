@@ -75,7 +75,6 @@ setInterval(async () => {
         p_cad = 1 / res['USDCAD']['rate'];
         p_usd = 1;
         p_eur = 1 / res['USDEUR']['rate'];
-        console.log("USDCAD:",res['USDCAD']['rate'])
         p_aed = 1 / res['USDAED']['rate'];
         p_inr = 1 / res['USDINR']['rate'];
         p_pkr = 1 / res['USDPKR']['rate'];
