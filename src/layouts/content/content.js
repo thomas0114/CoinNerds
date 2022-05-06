@@ -25,20 +25,20 @@ const Content = () => {
     const [rate_list, set_rate_list] = useState([]);
     const [rate_str, set_rate_str] = useState('CAD');
     const [select_num, set_select_num] = useState(0);
-    const markup_buy =[0.997, 0.995, 0.998, 0.999, 0.998, 0.998, 0.95, 0.95, 0.95, 0.95];
-    const markup_sell =[1.003, 1.005, 1.025 ,1.001,1.025, 1.025, 1.05, 1.05, 1.05, 1.05];
+    const markup_buy = [0.9985, 0.995, 0.99, 0.99, 0.99, 0.9930, 0.9930, 0.98, 0.98, 0.98];
+    const markup_sell = [1.0015, 1.005, 1.01, 1.01, 1.01, 1.0070, 1.0070, 1.02, 1.02, 1.02];
 
     useEffect(() => {
-        // setTimeout(() => {
-
+        // setTimeout(() => 
         // }, 2000);
         setInterval(() => {
             axios.get("get_cyrpto_currency").then((res) => {
                 set_pCurrencies(res.data.prices);
+                console.log(res.data.prices[6])
                 set_rate_list(res.data.rates);
             }).catch((error) => {
             })
-        },1000)
+        }, 1000)
 
     }, [])
     useEffect(() => {
@@ -46,10 +46,10 @@ const Content = () => {
 
         // }, 2000);
 
-            axios.get("get_cyrpto_currency").then((res) => {
-                set_rate_select(res.data.p_cad);
-            }).catch((error) => {
-            })
+        axios.get("get_cyrpto_currency").then((res) => {
+            set_rate_select(res.data.p_cad);
+        }).catch((error) => {
+        })
 
 
     }, [])
@@ -87,7 +87,7 @@ const Content = () => {
     return (
         <StyledComponent>
             <MusicBox display="flex" position="absolute" right="3%" top="3%" fontSize={"3.5rem"}>
-                {flag_music ? <MdToggleOn color="rgb(213 48 48)"  onClick={() => set_flag_music()} /> : <MdToggleOff  color="rgb(84 84 84)" onClick={() => set_flag_music()} />}
+                {flag_music ? <MdToggleOn color="rgb(213 48 48)" onClick={() => set_flag_music()} /> : <MdToggleOff color="rgb(84 84 84)" onClick={() => set_flag_music()} />}
             </MusicBox>
             <LogoPart>
                 <img src={Img_Logo1} alt="" />
@@ -110,7 +110,7 @@ const Content = () => {
                                                 </Box>
                                                 <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
                                             </LeftText02>
-                                            <RightText02>{(p_currencies[index]* rate_select * markup_buy[index]).toFixed(4)} {rate_str}</RightText02>
+                                            <RightText02>{(p_currencies[index] * rate_select * markup_buy[index]).toFixed(4)} {rate_str}</RightText02>
                                         </RowText>
                                     );
                                 })
@@ -136,7 +136,7 @@ const Content = () => {
                                                 </Box>
                                                 <Box display="flex" alignItems="center" ml="10px">1 {data.symbol}</Box>
                                             </LeftText02>
-                                            <RightText02>{Number((parseFloat(p_currencies[index]) * rate_select * markup_sell[index]).toFixed(4))} {rate_str}</RightText02>
+                                            <RightText02>{Number((parseFloat(p_currencies[index]) * rate_select * (1 / markup_sell[index])).toFixed(4))} {rate_str}</RightText02>
                                         </RowText>
                                     );
                                 })

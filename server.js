@@ -71,15 +71,14 @@ setInterval(async () => {
     //     p_pkr = res.rates.PKR;
     // })
     // .catch(error => console.log('error', error));
-    freeForexAPI.getQuotes(['USDEUR', 'USDCAD', 'EURUSD', 'USDINR', 'USDAED', 'USDPKR'], res => {
-
-        // console.log(1/res['USDEUR']['rate'])
-        p_cad = 1/res['USDCAD']['rate'];
+    freeForexAPI.getQuotes(['USDEUR', 'USDCAD', 'USDINR', 'USDAED', 'USDPKR'], res => {
+        p_cad = 1 / res['USDCAD']['rate'];
         p_usd = 1;
-        p_eur = 1/res['USDEUR']['rate'];
-        p_aed = 1/res['USDAED']['rate'];
-        p_inr = 1/res['USDINR']['rate'];
-        p_pkr = 1/res['USDPKR']['rate'];
+        p_eur = 1 / res['USDEUR']['rate'];
+        console.log("USDCAD:",res['USDCAD']['rate'])
+        p_aed = 1 / res['USDAED']['rate'];
+        p_inr = 1 / res['USDINR']['rate'];
+        p_pkr = 1 / res['USDPKR']['rate'];
         p_cad1 = res['USDCAD']['rate'];
         p_usd1 = 1;
         p_eur1 = res['USDEUR']['rate'];
@@ -110,17 +109,15 @@ setInterval(async () => {
             p_usdc = Number(prices[key]);
         }
     });
-}, 1000)
+}, 3000)
 
 var app = express();
 
 app.use(cors())
 
 app.get('/get_cyrpto_currency', function (req, res) {
-
     let vaules = [p_btc, p_eth, p_doge, p_dash, p_xmr, p_usdc, p_eur, p_aed, p_inr, p_pkr];
-    let rates = [p_cad1, p_usd1,  p_eur1, p_aed1, p_inr1, p_pkr1];
-
+    let rates = [p_cad1, p_usd1, p_eur1, p_aed1, p_inr1, p_pkr1];
     res.send({
         success: 1,
         prices: vaules,
