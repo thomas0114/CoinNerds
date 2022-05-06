@@ -134,12 +134,12 @@ app.get('/api/get_currency_rate/:coin', function (req, res) {
             symbol: "BTC",
             success: "true",
             rates: {
-                "USDBTC":p_btc*p_usd1,
-                "CADBTC":p_btc*p_cad1,
-                "EURBTC":p_btc*p_eur1,
-                "AEDBTC":p_btc*p_aed1,
-                "INRBTC":p_btc*p_inr1,
-                "PKRBTC":p_btc*p_pkr1,
+                "USD":p_btc*p_usd1,
+                "CAD":p_btc*p_cad1,
+                "EUR":p_btc*p_eur1,
+                "AED":p_btc*p_aed1,
+                "INR":p_btc*p_inr1,
+                "PKR":p_btc*p_pkr1,
             },
             time: now
         })
@@ -151,12 +151,12 @@ app.get('/api/get_currency_rate/:coin', function (req, res) {
             symbol: "ETH",
             success: "true",
             rates: {
-                "USDBTC":p_eth*p_usd1,
-                "CADBTC":p_eth*p_cad1,
-                "EURBTC":p_eth*p_eur1,
-                "AEDBTC":p_eth*p_aed1,
-                "INRBTC":p_eth*p_inr1,
-                "PKRBTC":p_eth*p_pkr1,
+                "USD":p_eth*p_usd1,
+                "CAD":p_eth*p_cad1,
+                "EUR":p_eth*p_eur1,
+                "AED":p_eth*p_aed1,
+                "INR":p_eth*p_inr1,
+                "PKR":p_eth*p_pkr1,
             },
             time: now
         })
@@ -168,12 +168,12 @@ app.get('/api/get_currency_rate/:coin', function (req, res) {
             symbol: "DOGE",
             success: "true",
             rates: {
-                "USDBTC":p_doge*p_usd1,
-                "CADBTC":p_doge*p_cad1,
-                "EURBTC":p_doge*p_eur1,
-                "AEDBTC":p_doge*p_aed1,
-                "INRBTC":p_doge*p_inr1,
-                "PKRBTC":p_doge*p_pkr1,
+                "USD":p_doge*p_usd1,
+                "CAD":p_doge*p_cad1,
+                "EUR":p_doge*p_eur1,
+                "AED":p_doge*p_aed1,
+                "INR":p_doge*p_inr1,
+                "PKR":p_doge*p_pkr1,
             },
             time: now
         })
@@ -185,12 +185,12 @@ app.get('/api/get_currency_rate/:coin', function (req, res) {
             symbol: "DASH",
             success: "true",
             rates: {
-                "USDBTC":p_dash*p_usd1,
-                "CADBTC":p_dash*p_cad1,
-                "EURBTC":p_dash*p_eur1,
-                "AEDBTC":p_dash*p_aed1,
-                "INRBTC":p_dash*p_inr1,
-                "PKRBTC":p_dash*p_pkr1,
+                "USD":p_dash*p_usd1,
+                "CAD":p_dash*p_cad1,
+                "EUR":p_dash*p_eur1,
+                "AED":p_dash*p_aed1,
+                "INR":p_dash*p_inr1,
+                "PKR":p_dash*p_pkr1,
             },
             time: now
         })
@@ -202,12 +202,12 @@ app.get('/api/get_currency_rate/:coin', function (req, res) {
             symbol: "XMR",
             success: "true",
             rates: {
-                "USDBTC":p_xmr*p_usd1,
-                "CADBTC":p_xmr*p_cad1,
-                "EURBTC":p_xmr*p_eur1,
-                "AEDBTC":p_xmr*p_aed1,
-                "INRBTC":p_xmr*p_inr1,
-                "PKRBTC":p_xmr*p_pkr1,
+                "USD":p_xmr*p_usd1,
+                "CAD":p_xmr*p_cad1,
+                "EUR":p_xmr*p_eur1,
+                "AED":p_xmr*p_aed1,
+                "INR":p_xmr*p_inr1,
+                "PKR":p_xmr*p_pkr1,
             },
             time: now
         })
@@ -219,12 +219,12 @@ app.get('/api/get_currency_rate/:coin', function (req, res) {
             symbol: "USDC",
             success: "true",
             rates: {
-                "USDBTC":p_usdc*p_usd1,
-                "CADBTC":p_usdc*p_cad1,
-                "EURBTC":p_usdc*p_eur1,
-                "AEDBTC":p_usdc*p_aed1,
-                "INRBTC":p_usdc*p_inr1,
-                "PKRBTC":p_usdc*p_pkr1,
+                "USD":p_usdc*p_usd1,
+                "CAD":p_usdc*p_cad1,
+                "EUR":p_usdc*p_eur1,
+                "AED":p_usdc*p_aed1,
+                "INR":p_usdc*p_inr1,
+                "PKR":p_usdc*p_pkr1,
             },
             time: now
         })
