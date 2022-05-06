@@ -31,7 +31,7 @@ const Content = () => {
 
     useEffect(() => {
         setInterval(() => {
-            axios.get("get_cyrpto_currency").then((res) => {
+            axios.get("get_coinnerds_rate").then((res) => {
                 set_pCurrencies(res.data.prices);
                 set_rate_list(res.data.rates);
             }).catch((error) => {
@@ -44,7 +44,7 @@ const Content = () => {
 
         // }, 2000);
 
-        axios.get("get_cyrpto_currency").then((res) => {
+        axios.get("get_coinnerds_rate").then((res) => {
             set_rate_select(res.data.p_cad);
         }).catch((error) => {
         })

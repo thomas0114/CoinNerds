@@ -114,7 +114,7 @@ var app = express();
 
 app.use(cors())
 
-app.get('/get_cyrpto_currency', function (req, res) {
+app.get('/get_coinnerds_rate', function (req, res) {
     let vaules = [p_btc, p_eth, p_doge, p_dash, p_xmr, p_usdc, p_eur, p_aed, p_inr, p_pkr];
     let rates = [p_cad1, p_usd1, p_eur1, p_aed1, p_inr1, p_pkr1];
     res.send({
@@ -123,6 +123,113 @@ app.get('/get_cyrpto_currency', function (req, res) {
         rates: rates,
         p_cad: p_cad1,
     })
+});
+
+app.get('/api/get_currency_rate/:coin', function (req, res) {
+    let now = new Date();
+    if(req.params.coin === "btc")
+    {
+        res.send({
+            name: "Bitcoin",
+            symbol: "BTC",
+            success: "true",
+            rates: {
+                "USDBTC":p_btc*p_usd1,
+                "CADBTC":p_btc*p_cad1,
+                "EURBTC":p_btc*p_eur1,
+                "AEDBTC":p_btc*p_aed1,
+                "INRBTC":p_btc*p_inr1,
+                "PKRBTC":p_btc*p_pkr1,
+            },
+            time: now
+        })
+    }
+    if(req.params.coin === "eth")
+    {
+        res.send({
+            name: "Ethereum",
+            symbol: "ETH",
+            success: "true",
+            rates: {
+                "USDBTC":p_eth*p_usd1,
+                "CADBTC":p_eth*p_cad1,
+                "EURBTC":p_eth*p_eur1,
+                "AEDBTC":p_eth*p_aed1,
+                "INRBTC":p_eth*p_inr1,
+                "PKRBTC":p_eth*p_pkr1,
+            },
+            time: now
+        })
+    }
+    if(req.params.coin === "doge")
+    {
+        res.send({
+            name: "Dogecoin",
+            symbol: "DOGE",
+            success: "true",
+            rates: {
+                "USDBTC":p_doge*p_usd1,
+                "CADBTC":p_doge*p_cad1,
+                "EURBTC":p_doge*p_eur1,
+                "AEDBTC":p_doge*p_aed1,
+                "INRBTC":p_doge*p_inr1,
+                "PKRBTC":p_doge*p_pkr1,
+            },
+            time: now
+        })
+    }
+    if(req.params.coin === "dash")
+    {
+        res.send({
+            name: "Dash",
+            symbol: "DASH",
+            success: "true",
+            rates: {
+                "USDBTC":p_dash*p_usd1,
+                "CADBTC":p_dash*p_cad1,
+                "EURBTC":p_dash*p_eur1,
+                "AEDBTC":p_dash*p_aed1,
+                "INRBTC":p_dash*p_inr1,
+                "PKRBTC":p_dash*p_pkr1,
+            },
+            time: now
+        })
+    }
+    if(req.params.coin === "xmr")
+    {
+        res.send({
+            name: "Monero",
+            symbol: "XMR",
+            success: "true",
+            rates: {
+                "USDBTC":p_xmr*p_usd1,
+                "CADBTC":p_xmr*p_cad1,
+                "EURBTC":p_xmr*p_eur1,
+                "AEDBTC":p_xmr*p_aed1,
+                "INRBTC":p_xmr*p_inr1,
+                "PKRBTC":p_xmr*p_pkr1,
+            },
+            time: now
+        })
+    }
+    if(req.params.coin === "usdc")
+    {
+        res.send({
+            name: "USD Coin",
+            symbol: "USDC",
+            success: "true",
+            rates: {
+                "USDBTC":p_usdc*p_usd1,
+                "CADBTC":p_usdc*p_cad1,
+                "EURBTC":p_usdc*p_eur1,
+                "AEDBTC":p_usdc*p_aed1,
+                "INRBTC":p_usdc*p_inr1,
+                "PKRBTC":p_usdc*p_pkr1,
+            },
+            time: now
+        })
+    }
+    
 });
 
 app.listen(9001, function () {
