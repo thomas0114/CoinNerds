@@ -38,6 +38,7 @@ let p_aed1 = 0;
 let p_inr1 = 0;
 let p_pkr1 = 0;
 
+let coin_price = new Object;
 
 
 setInterval(async () => {
@@ -87,6 +88,9 @@ setInterval(async () => {
 
     })
     const prices = await Binance_client.prices()
+    // console.log(typeof(prices));
+    coin_price = prices;
+    // console.log(prices);
     Object.keys(prices).forEach(function (key) {
 
         if (key === 'BTCUSDT') {
@@ -127,109 +131,122 @@ app.get('/get_coinnerds_rate', function (req, res) {
 
 app.get('/api/get_currency_rate/:coin', function (req, res) {
     let now = new Date();
-    if(req.params.coin === "btc")
-    {
+    // console.log(coin_price["BTCUSDT"])
+    Object.keys(coin_price).forEach(function (key) {
+        if (key === req.params.coin) {
+            res.send({
+                symbol: req.params.coin,
+                success: "true",
+                rates: coin_price[key],
+                time: now
+            })
+        }
+        // else{
+        //     res.send({
+        //         symbol: req.params.coin,
+        //         success: "false",
+        //         time: now
+        //     })
+        // }
+    });
+
+    if (req.params.coin === "btc") {
         res.send({
             name: "Bitcoin",
             symbol: "BTC",
             success: "true",
             rates: {
-                "USD":p_btc*p_usd1,
-                "CAD":p_btc*p_cad1,
-                "EUR":p_btc*p_eur1,
-                "AED":p_btc*p_aed1,
-                "INR":p_btc*p_inr1,
-                "PKR":p_btc*p_pkr1,
+                "USD": p_btc * p_usd1,
+                "CAD": p_btc * p_cad1,
+                "EUR": p_btc * p_eur1,
+                "AED": p_btc * p_aed1,
+                "INR": p_btc * p_inr1,
+                "PKR": p_btc * p_pkr1,
             },
             time: now
         })
     }
-    if(req.params.coin === "eth")
-    {
+    if (req.params.coin === "eth") {
         res.send({
             name: "Ethereum",
             symbol: "ETH",
             success: "true",
             rates: {
-                "USD":p_eth*p_usd1,
-                "CAD":p_eth*p_cad1,
-                "EUR":p_eth*p_eur1,
-                "AED":p_eth*p_aed1,
-                "INR":p_eth*p_inr1,
-                "PKR":p_eth*p_pkr1,
+                "USD": p_eth * p_usd1,
+                "CAD": p_eth * p_cad1,
+                "EUR": p_eth * p_eur1,
+                "AED": p_eth * p_aed1,
+                "INR": p_eth * p_inr1,
+                "PKR": p_eth * p_pkr1,
             },
             time: now
         })
     }
-    if(req.params.coin === "doge")
-    {
+    if (req.params.coin === "doge") {
         res.send({
             name: "Dogecoin",
             symbol: "DOGE",
             success: "true",
             rates: {
-                "USD":p_doge*p_usd1,
-                "CAD":p_doge*p_cad1,
-                "EUR":p_doge*p_eur1,
-                "AED":p_doge*p_aed1,
-                "INR":p_doge*p_inr1,
-                "PKR":p_doge*p_pkr1,
+                "USD": p_doge * p_usd1,
+                "CAD": p_doge * p_cad1,
+                "EUR": p_doge * p_eur1,
+                "AED": p_doge * p_aed1,
+                "INR": p_doge * p_inr1,
+                "PKR": p_doge * p_pkr1,
             },
             time: now
         })
     }
-    if(req.params.coin === "dash")
-    {
+    if (req.params.coin === "dash") {
         res.send({
             name: "Dash",
             symbol: "DASH",
             success: "true",
             rates: {
-                "USD":p_dash*p_usd1,
-                "CAD":p_dash*p_cad1,
-                "EUR":p_dash*p_eur1,
-                "AED":p_dash*p_aed1,
-                "INR":p_dash*p_inr1,
-                "PKR":p_dash*p_pkr1,
+                "USD": p_dash * p_usd1,
+                "CAD": p_dash * p_cad1,
+                "EUR": p_dash * p_eur1,
+                "AED": p_dash * p_aed1,
+                "INR": p_dash * p_inr1,
+                "PKR": p_dash * p_pkr1,
             },
             time: now
         })
     }
-    if(req.params.coin === "xmr")
-    {
+    if (req.params.coin === "xmr") {
         res.send({
             name: "Monero",
             symbol: "XMR",
             success: "true",
             rates: {
-                "USD":p_xmr*p_usd1,
-                "CAD":p_xmr*p_cad1,
-                "EUR":p_xmr*p_eur1,
-                "AED":p_xmr*p_aed1,
-                "INR":p_xmr*p_inr1,
-                "PKR":p_xmr*p_pkr1,
+                "USD": p_xmr * p_usd1,
+                "CAD": p_xmr * p_cad1,
+                "EUR": p_xmr * p_eur1,
+                "AED": p_xmr * p_aed1,
+                "INR": p_xmr * p_inr1,
+                "PKR": p_xmr * p_pkr1,
             },
             time: now
         })
     }
-    if(req.params.coin === "usdc")
-    {
+    if (req.params.coin === "usdc") {
         res.send({
             name: "USD Coin",
             symbol: "USDC",
             success: "true",
             rates: {
-                "USD":p_usdc*p_usd1,
-                "CAD":p_usdc*p_cad1,
-                "EUR":p_usdc*p_eur1,
-                "AED":p_usdc*p_aed1,
-                "INR":p_usdc*p_inr1,
-                "PKR":p_usdc*p_pkr1,
+                "USD": p_usdc * p_usd1,
+                "CAD": p_usdc * p_cad1,
+                "EUR": p_usdc * p_eur1,
+                "AED": p_usdc * p_aed1,
+                "INR": p_usdc * p_inr1,
+                "PKR": p_usdc * p_pkr1,
             },
             time: now
         })
     }
-    
+
 });
 
 app.listen(9001, function () {
